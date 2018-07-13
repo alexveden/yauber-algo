@@ -1,4 +1,4 @@
-from setuptools import setup
+from setuptools import setup, find_packages
 
 setup(name='yauber_algo',
       version='0.1a',
@@ -7,7 +7,7 @@ setup(name='yauber_algo',
       author='Alex Veden',
       author_email='i@alexveden.com',
       license='MIT',
-      packages=['yauber_algo'],
+      packages=find_packages(),
       install_requires=[
             'pandas',
             'numpy',
