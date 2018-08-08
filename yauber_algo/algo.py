@@ -62,6 +62,7 @@ def ref(arr, period):
     """
     Reference to past or future values
     WARNING: positive `period` value leads to future reference, use with care!
+
     :param arr: input data to reference
     :param period: negative value refers to previous data, positive value refers to the future
     :return:
@@ -84,6 +85,7 @@ def ref(arr, period):
 def iif(cond, if_true_arr, if_false_arr):
     """
     Returns `if_true_arr` value if `cond` is true, otherwise returns  `if_false_arr`
+
     :param cond:
     :param if_true_arr: array or number
     :param if_false_arr: array or number
@@ -108,6 +110,7 @@ def iif(cond, if_true_arr, if_false_arr):
 def hhv(arr, period):
     """
     Returns highest value of `arr` for last `period` bars
+
     :param arr:
     :param period:
     :return:
@@ -127,6 +130,7 @@ def hhv(arr, period):
 def llv(arr, period):
     """
     Returns lowest value of `arr` for last `period` bars
+
     :param arr:
     :param period:
     :return:
@@ -146,6 +150,7 @@ def llv(arr, period):
 def highest_since(arr, cond):
     """
     Returns highest value of `arr` since `cond` is True
+
     :param arr:
     :param cond:
     :return:
@@ -165,6 +170,7 @@ def highest_since(arr, cond):
 def lowest_since(arr, cond):
     """
     Returns lowest value of `arr` since `cond` is True
+
     :param arr:
     :param cond:
     :return:
@@ -184,6 +190,7 @@ def lowest_since(arr, cond):
 def bars_since(cond):
     """
     Count of bars passed since `cond` is True
+
     :param cond:
     :return:
     """
@@ -201,6 +208,7 @@ def bars_since(cond):
 def cross_up(arr, arr_threshold):
     """
     Crosses up if arr[i-1] < arr_threshold[i-1] and arr[i] > arr_threshold[i]
+
     :param arr:
     :param arr_threshold: array or number
     :return:
@@ -219,6 +227,7 @@ def cross_up(arr, arr_threshold):
 def cross_dn(arr, arr_threshold):
     """
     Crosses down if arr[i-1] > arr_threshold[i-1] and arr[i] < arr_threshold[i]
+
     :param arr:
     :param arr_threshold: array or number
     :return:
@@ -237,6 +246,7 @@ def cross_dn(arr, arr_threshold):
 def sum(arr, period):
     """
     Rolling sum of `arr` values in past `period` bars
+
     :param arr:
     :param period:
     :return:
@@ -256,6 +266,7 @@ def sum(arr, period):
 def ma(arr, period):
     """
     Moving average of `arr` values in past `period` bars
+
     :param arr:
     :param period:
     :return:
@@ -275,6 +286,7 @@ def ma(arr, period):
 def stdev(arr, period):
     """
     Standard deviation of `arr` values in past `period` bars
+
     :param arr:
     :param period:
     :return:
@@ -300,6 +312,7 @@ def stdev(arr, period):
 def percent_rank(arr, period):
     """
     Percent rank of `arr` values in past `period` bars. Values are between [0.0;1.0]
+
     :param arr:
     :param period:
     :return:
@@ -322,6 +335,7 @@ def percent_rank(arr, period):
 def percent_rank_category(arr, category, period):
     """
     Percent rank of `arr` values in past `period` occurrences of the same `category` values. Values are between [0.0;1.0]
+
     :param arr:
     :param period:
     :return:
@@ -349,6 +363,7 @@ def percent_rank_category(arr, category, period):
 def apply(arr, period, func, category=None, return_as_cat=None, exclude_nan=True):
     """
     Apply custom function to the `arr`
+
     :param arr: input array
     :param period: period in bars
     :param func: function with signature f(arr: np.array or pd.Series) must return float number
@@ -399,6 +414,7 @@ def apply(arr, period, func, category=None, return_as_cat=None, exclude_nan=True
 def sum_since(arr, cond, first_is_zero=False):
     """
     Cumulative sum of `arr` values since `cond` is True
+
     :param arr:
     :param cond:
     :param first_is_zero:
@@ -419,6 +435,7 @@ def sum_since(arr, cond, first_is_zero=False):
 def zscore(arr, period):
     """
     ZScore transformation of `arr` for rolling `period.` ZScore = (X - MEAN(X)) / STDEV(X)
+
     :param arr:
     :param period:
     :return:
@@ -440,6 +457,7 @@ def zscore(arr, period):
 def min(arr1, arr2):
     """
     Returns minimal value of two arrays
+
     :param arr1:
     :param arr2:
     :return:
@@ -457,6 +475,7 @@ def min(arr1, arr2):
 def max(arr1, arr2):
     """
     Returns maximal value of two arrays
+
     :param arr1:
     :param arr2:
     :return:
@@ -473,6 +492,7 @@ def max(arr1, arr2):
 def abs(arr):
     """
     Array based absolute function
+
     :param arr:
     :return:
     """
@@ -488,6 +508,7 @@ def abs(arr):
 def value_when(arr, cond):
     """
     Return value of `arr` at the point when `cond` is True
+
     :param arr:
     :param cond:
     :return:
@@ -507,6 +528,7 @@ def value_when(arr, cond):
 def nz(arr, fill_by):
     """
     Fills NaN/Infinity values of `arr` by `fill_by` value
+
     :param arr: Array
     :param fill_by: Number
     :return:
@@ -529,6 +551,7 @@ def nz(arr, fill_by):
 def quantile(arr, period, q):
     """
     Returns quantile value `q` for `arr` for the last `period` bars
+
     :param arr: array
     :param period: integer nubmer
     :param q: float [0.0;1.0]
@@ -561,6 +584,7 @@ def quantile(arr, period, q):
 def median(arr, period):
     """
     Median value for `arr` in `period` window
+
     :param arr:
     :param period:
     :return:
@@ -571,6 +595,7 @@ def median(arr, period):
 def roc(arr, period):
     """
     % rate of change for `arr` to previous `period` = arr[i] / arr[i-period] - 1
+
     :param arr:
     :param period:
     :return:
@@ -596,6 +621,7 @@ def roc(arr, period):
 def roc_log(arr, period):
     """
     Logarithmic rate of change for `arr` to previous`period` = log(arr[i] / arr[i-period])
+
     :param arr:
     :param period:
     :return:
@@ -621,6 +647,7 @@ def roc_log(arr, period):
 def diff(arr, period):
     """
     Difference of `arr` to previous `period` = arr[i] - arr[i-period]
+
     :param arr:
     :param period:
     :return:
@@ -643,6 +670,7 @@ def diff(arr, period):
 def rsi(arr, period):
     """
     RSI Indicator
+
     :param arr:
     :param period:
     :return:
@@ -667,6 +695,7 @@ def rangehilo(o, h, l, c, period):
     Estimates doji-ness of candle (if `period` = 1) or some bar range (if `period` > 1)
     1.0 - means that a candle is exact Doji
     0.0 - means that a candle is trending from Open price to Close (where open is min/max and close is min/max price of candle)
+
     :param o:
     :param h:
     :param l:
@@ -695,6 +724,7 @@ def rangehilo(o, h, l, c, period):
 def rangeclose(h, l, c, period):
     """
     Returns the position of close price of the period related to H-L range of the period
+
     :param h:
     :param l:
     :param c:
@@ -722,6 +752,7 @@ def rangeclose(h, l, c, period):
 def wma(arr, weight, period):
     """
     Generic weighted moving average
+
     :param arr: array
     :param weight: array
     :param period: int
@@ -744,6 +775,7 @@ def wma(arr, weight, period):
 def correlation(x, y, period):
     """
     Pearson correlation function
+
     :param x:
     :param y:
     :param period:
@@ -766,6 +798,7 @@ def correlation(x, y, period):
 def categorize(arr, bins):
     """
     Split `arr` into categorical groups based on `bins` array
+
     :param arr:
     :param bins: must include at least 3 elements: [min, bin1..binX, max]
     :return:
@@ -801,6 +834,7 @@ def categorize(arr, bins):
 def truerange(h, l, c, period, is_pct=False):
     """
     Returns true range of the `period`
+
     :param h:
     :param l:
     :param c:
@@ -829,6 +863,7 @@ def truerange(h, l, c, period, is_pct=False):
 def updn_ratio(arr, period):
     """
     Ration of up and down bars in the `period`
+
     :param arr:
     :param period:
     :return:
