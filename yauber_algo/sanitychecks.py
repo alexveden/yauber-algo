@@ -165,7 +165,7 @@ class SanityChecker:
                 raise YaUberSanityCheckError("Only np.arrays are allowed in this test")
 
         if expected.dtype != np.float:
-            raise AssertionError(f'All algos of yauber_algo.algo must return dtype=np.float, you expect: {expected.dtype}')
+            raise AssertionError(f'All algos of YaUber.algo must return dtype=np.float, you expect: {expected.dtype}')
         if sum(np.isinf(expected)) > 0:
             raise AssertionError(f'Result of the algorithm must never return Inf values, EXPECTED Inf values must be replaced by NaNs!')
         if not has_nan:
@@ -298,8 +298,8 @@ class SanityChecker:
 
             is_break = False
 
-            for a in f_args:
-                if isinstance(a, np.ndarray):
+            for i, a in enumerate(f_args):
+                if isinstance(a, np.ndarray) and (i not in kwargs.get('fix_args', [])):
                     if len(a) < min_datapoints:
                         raise YaUberSanityCheckError("Length of f_args array less than min_datapoints")
 
@@ -311,7 +311,7 @@ class SanityChecker:
                     f_args_alt.append(a)
 
             for k, a in f_kwargs.items():
-                if isinstance(a, np.ndarray):
+                if isinstance(a, np.ndarray) and (k not in kwargs.get('fix_kwargs', [])):
                     if len(a) < min_datapoints:
                         raise YaUberSanityCheckError("Length of f_kwargs array less than min_datapoints")
 
@@ -397,8 +397,8 @@ class SanityChecker:
 
             is_break = False
 
-            for a in f_args:
-                if isinstance(a, np.ndarray):
+            for i, a in enumerate(f_args):
+                if isinstance(a, np.ndarray) and (i not in kwargs.get('fix_args', [])):
                     if len(a) < min_datapoints:
                         raise YaUberSanityCheckError("Length of f_args array less than min_datapoints")
 
@@ -410,7 +410,7 @@ class SanityChecker:
                     f_args_alt.append(a)
 
             for k, a in f_kwargs.items():
-                if isinstance(a, np.ndarray):
+                if isinstance(a, np.ndarray) and (k not in kwargs.get('fix_kwargs', [])):
                     if len(a) < min_datapoints:
                         raise YaUberSanityCheckError("Length of f_kwargs array less than min_datapoints")
 

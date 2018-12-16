@@ -997,3 +997,25 @@ def _updn_ratio(arr, period):
                 result[i] = ((upcnt + dncnt*-1) / (dncnt + upcnt + medcnt) + 1) / 2.0
 
     return result
+
+@jit(nopython=True)
+def _twma(c, w_periods):
+    n_periods = len(w_periods)
+
+    result = np.full(len(c), np.nan)
+    for i in range(n_periods-1, len(c)):
+        if not isfinite(c[i]):
+            continue
+
+        omega = w_periods[0]
+        _twma_res = c[i] * w_periods[0]
+
+        for k in range(i - n_periods + 1, i):
+            if isfinite(c[k]):
+                _twma_res += c[k] * w_periods[i - k]
+                omega += w_periods[i - k]
+
+        if omega != 0:
+            result[i] = _twma_res / omega
+
+    return result

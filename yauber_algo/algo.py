@@ -7,7 +7,7 @@ from .errors import YaUberAlgoArgumentError, YaUberAlgoFutureReferenceError, YaU
 from ._algo.tstoolbox import _ref, _iif, _hhv, _llv, _highest_since, _lowest_since, _bars_since, \
                                   _cross_up, _cross_dn, _sum, _ma, _stdev, _sum_since, _zscore, _min, \
                                   _max, _abs, _value_when, _nz, _roc, _diff, _rsi, _rangehilo, _rangeclose, \
-                                  _wma, _correlation, _truerange, _updn_ratio, _roc_log
+                                  _wma, _correlation, _truerange, _updn_ratio, _roc_log, _twma
 
 from ._algo.featurewiz import _percent_rank, _percent_rank_category, cat_sort_unique, _apply_categorical, _apply_rolling, _quantile, \
                                    _categorize
@@ -881,3 +881,62 @@ def updn_ratio(arr, period):
         return pd.Series(_updn_ratio(arr.values, period), index=arr.index)
     elif isinstance(arr, np.ndarray):
         return _updn_ratio(arr, period)
+
+
+def twma_weights_exponential(periods, alpha=None):
+    """
+    Create exponential weights for given number of periods
+    :param periods: window size
+    :param alpha: alpha, if None uses _alpha = 2 / (periods + 1)
+    :return:
+    """
+    if alpha is None:
+        _alpha = 2 / (periods + 1)
+    else:
+        _alpha = alpha
+
+    return (1 - _alpha) ** np.arange(periods)
+
+
+def ema(arr, periods):
+    """
+    Exponential moving average.
+    Window consistent algorithm, that uses twma(). Single pass EMA algorithms do not pass WindowConsistency check, and generally uses
+    a data out of the given window. For example Pandas.ewm(10 periods) uses about 30-40 data points to calculate final value. This behavior
+    is not acceptable. ema() function will return slightly different series because of window consistency restrictions!
+    :param arr:
+    :param periods:
+    :return:
+    """
+    expw = twma_weights_exponential(periods, alpha=None)
+    return twma(arr, expw)
+
+
+def twma(arr, wgt_period):
+    """
+    Time-weighted average
+    :param arr: price array
+    :param wgt_period: weight array, might be less than len(arr). Length of wgt_period equals to period of calculations.
+                       First element of wgt_period means i-th element. Must not contain NaN or Inf!
+                       For example:
+                            wgt_period=[1, 0.5, 0.25] leads to result: (arr[i]*1.0 + arr[i-1]*0.5 + arr[i-2]*0.25) / (1.0+0.5+0.25)
+    :return:
+    """
+    # Do quick sanity checks of arguments
+    _check_series_args(arr=arr)
+
+    if len(wgt_period) > len(arr):
+        raise YaUberAlgoArgumentError(f"'wgt_period' length must be less or equal to arr length")
+    if not np.all(np.isfinite(wgt_period)):
+        raise YaUberAlgoArgumentError(f"'wgt_period' all weights must be non NaN")
+
+    w = wgt_period
+    if isinstance(w, list):
+        w = np.array(w)
+    elif isinstance(w, pd.Series):
+        w = w.values
+
+    if isinstance(arr, pd.Series):
+        return pd.Series(_twma(arr.values, w), index=arr.index)
+    elif isinstance(arr, np.ndarray):
+        return _twma(arr, w)
