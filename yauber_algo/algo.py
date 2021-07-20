@@ -16,8 +16,8 @@ from ._algo.featurewiz import _percent_rank, _percent_rank_category, cat_sort_un
 import warnings
 import numpy as np
 import pandas as pd
-from math import  isfinite
-pd.options.mode.use_inf_as_na = True
+from math import isfinite
+
 
 IS_WARN_FUTREF = os.getenv('YAUBER_WARN_FUTREF', False)
 IS_RAISE_FUTREF = os.getenv('YAUBER_RAISE_FUTREF', False)
