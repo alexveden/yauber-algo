@@ -48,8 +48,32 @@ Highlights:
 
 13. Logic of all algorithms must be stable, and do not change after release.  
 
+### Installation
+```
+pip install git+https://github.com/alexveden/yauber-algo.git#egg=yauber_algo
+```
+
+### Usage
+
+```python
+import pandas as pd
+import numpy as np
+import yauber_algo.algo as a
+
+# Getting list of all functions
+# > help(a)
+
+# Let's load financial OHLCV series from some datasource 
+ohlc = pd.read_csv('<path to financial series>')
+
+# Trading rule
+long_rule = a.ma(ohlc['c'], 20) > ohlc['c']
+
+# Historical Volatility Indicator
+vola = np.sqrt(a.ema(a.roc_log(ohlc['c'], 1) ** 2, 20)) * np.sqrt(248)
+```
 
 ### Copyright
 MIT License
 
-Copyright (c) 2018 Aleksandr Vedeneev
+Copyright (c) 2018-2021 Aleksandr Vedeneev

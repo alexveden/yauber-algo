@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 
 setup(name='yauber_algo',
-      version='0.3a',
+      version='1.0',
       description='Financial time-series toolbox',
       url='https://github.com/alexveden/yauber-algo',
       author='Alex Veden',

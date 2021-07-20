@@ -2,8 +2,8 @@ import unittest
 from yauber_algo.errors import *
 
 
-class AbsTestCase(unittest.TestCase):
-    def test_abs(self):
+class NzTestCase(unittest.TestCase):
+    def test_nz(self):
         import yauber_algo.sanitychecks as sc
         from numpy import array, nan, inf
         import os

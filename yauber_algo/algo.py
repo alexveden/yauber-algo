@@ -542,6 +542,8 @@ def nz(arr, fill_by):
     if not isfinite(fill_by):
         raise YaUberAlgoArgumentError(f"'fill_by' must be finite number, got {fill_by}")
 
+    fill_by = float(fill_by)
+
     if isinstance(arr, pd.Series):
         return pd.Series(_nz(arr.values, fill_by), index=arr.index)
     elif isinstance(arr, np.ndarray):
